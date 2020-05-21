@@ -55,6 +55,9 @@ public class HomeFragment extends BaseFragment implements HomeCallback {
     public void onCategoryLoaded(Category category) {
         setUpState(State.SUCCESS);
         if (homePagerAdapter != null) {
+
+            //mViewPager.setOffscreenPageLimit(category.getData().size()); viewPager默认预加载1,2两页，可通过出此参数修改预加载页数
+
             homePagerAdapter.setCategory(category);
         }
     }

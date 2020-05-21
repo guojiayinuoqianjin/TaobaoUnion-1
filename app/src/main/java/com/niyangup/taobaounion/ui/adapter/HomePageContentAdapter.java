@@ -1,5 +1,6 @@
 package com.niyangup.taobaounion.ui.adapter;
 
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,11 +38,24 @@ public class HomePageContentAdapter extends RecyclerView.Adapter<HomePageContent
         HomePageCentent.DataBean dataBean = contents.get(position);
         holder.title.setText(dataBean.getTitle());
         holder.offPriceTv.setText("省" + dataBean.getCoupon_amount() + "元");
-        LogUtil.d(this, "省:" + dataBean.getCoupon_amount());
-        Glide.with(holder.itemView).load(UrlUtil.getCoverPath(dataBean.getPict_url())).into(holder.cover);
-        int couponAmount = dataBean.getCoupon_amount();
 
-        //TODO  计算finalPrice显示在tv上
+
+        ViewGroup.LayoutParams layoutParams = holder.cover.getLayoutParams();
+        int width = layoutParams.width;
+        int height = layoutParams.height;
+        int finalSize = (width > height ? width : height) ;
+        LogUtil.d(this, "size:" + finalSize);
+
+
+        Glide.with(holder.itemView).load(UrlUtil.getCoverPath(dataBean.getPict_url(), finalSize)).into(holder.cover);
+        String price = dataBean.getZk_final_price();
+        float priceFloat = Float.parseFloat(price);
+        int couponAmount = dataBean.getCoupon_amount();
+        float finalPriceFload = priceFloat - couponAmount;
+        holder.finalPrice.setText(String.format("%.2f", finalPriceFload));//优惠后的价格
+        holder.startPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.startPrice.setText(String.format("¥%.1f", Float.parseFloat(price)));//原价
+        holder.saleNum.setText(dataBean.getVolume() + "人已购");
     }
 
     @Override
@@ -53,6 +67,13 @@ public class HomePageContentAdapter extends RecyclerView.Adapter<HomePageContent
         this.contents.clear();
         this.contents.addAll(contents);
         notifyDataSetChanged();
+    }
+
+    public void addData(List<HomePageCentent.DataBean> data) {
+        int olderSize = contents.size();
+
+        contents.addAll(data);
+        notifyItemRangeChanged(olderSize, data.size());
     }
 
     public class InnerHolder extends RecyclerView.ViewHolder {
@@ -67,6 +88,12 @@ public class HomePageContentAdapter extends RecyclerView.Adapter<HomePageContent
 
         @BindView(R.id.tv_final_price)
         public TextView finalPrice;
+
+        @BindView(R.id.tv_start_price)
+        public TextView startPrice;
+
+        @BindView(R.id.tv_sale_num)
+        public TextView saleNum;
 
         public InnerHolder(@NonNull View itemView) {
             super(itemView);

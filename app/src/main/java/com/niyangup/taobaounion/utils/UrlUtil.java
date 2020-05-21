@@ -5,7 +5,9 @@ public class UrlUtil {
         return "discovery/" + materialId + "/" + page;
     }
 
-    public static String getCoverPath(String url) {
-        return "https:" + url;
+    public static String getCoverPath(String url, int size) {
+        String result = "https:" + url + "_" + Math.round(size) + "x" + Math.round(size) + ".jpg";
+        LogUtil.d("tag", result);
+        return result;
     }
 }

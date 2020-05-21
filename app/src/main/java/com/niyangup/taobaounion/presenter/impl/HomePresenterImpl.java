@@ -1,6 +1,6 @@
 package com.niyangup.taobaounion.presenter.impl;
 
-import com.niyangup.taobaounion.model.domain.Api;
+import com.niyangup.taobaounion.model.Api;
 import com.niyangup.taobaounion.model.domain.Category;
 import com.niyangup.taobaounion.presenter.HomePresenter;
 import com.niyangup.taobaounion.utils.LogUtil;

@@ -21,12 +21,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:maxLines="2"
-            android:ellipsize="end"
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:text="临时的诗句临时的诗句临时的诗句临时的诗句临时的诗句临时的诗句"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -61,13 +61,17 @@
                 android:textColor="@color/colorPrimary" />
 
             <TextView
+                android:id="@+id/tv_start_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="￥23"
-                android:textColor="@color/colorGrey" />
+
+                android:textColor="@color/colorGrey"
+                android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/tv_sale_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"

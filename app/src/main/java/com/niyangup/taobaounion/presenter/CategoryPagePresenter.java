@@ -7,7 +7,7 @@ public interface CategoryPagePresenter extends BasePresenter<CategoryCallback> {
 
     void getContentCategoryId(int categoryId);
 
-    void loadMore(int categoryId, int page);
+    void loadMore(int categoryId);
 
     void reload(int categoryId);
 }
