@@ -9,5 +9,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_search">搜你想搜的宝贝</string>
     <string name="coupon_union">领券联盟</string>
+    <string name="network_error_tap_to_reload">网络错误,点击重试</string>
 
 </resources>

@@ -17,6 +17,9 @@ public class HomePresenterImpl implements HomePresenter {
 
     @Override
     public void getCategory() {
+        if (mCallback != null) {
+            mCallback.onLoading();
+        }
         Retrofit retrofit = RetrofitManager.getInstance().getmRetrofit();
         Call<Category> task = retrofit.create(Api.class).getCategory();
         task.enqueue(new Callback<Category>() {
@@ -26,11 +29,19 @@ public class HomePresenterImpl implements HomePresenter {
                 LogUtil.i(this, "状态码:" + response.code());
                 if (response.code() == 200) {
                     Category category = response.body();
-//                    LogUtil.i(this, category.toString());
                     if (mCallback != null) {
-                        mCallback.onCategoryLoaded(category);
+//                    LogUtil.i(this, category.toString());
+                        if (category == null || category.getData().size() == 0) {
+                            mCallback.onEmpty();
+                        } else {
+                            mCallback.onCategoryLoaded(category);
+                        }
                     }
                 } else {
+                    if (mCallback != null) {
+                        mCallback.onNetworkError();
+                    }
+
                     LogUtil.i(this, "请求失败..." + response.message());
                 }
             }
@@ -39,6 +50,9 @@ public class HomePresenterImpl implements HomePresenter {
             public void onFailure(Call<Category> call, Throwable t) {
                 //失败
                 LogUtil.d(HomePresenterImpl.class, "error" + t.getMessage());
+                if (mCallback != null) {
+                    mCallback.onNetworkError();
+                }
             }
         });
 
@@ -46,12 +60,12 @@ public class HomePresenterImpl implements HomePresenter {
     }
 
     @Override
-    public void registerCallback(HomeCallback callback) {
+    public void registerViewCallback(HomeCallback callback) {
         this.mCallback = callback;
     }
 
     @Override
-    public void unregisterCallback(HomeCallback callback) {
+    public void unregisterViewCallback(HomeCallback callback) {
         mCallback = null;
     }
 }

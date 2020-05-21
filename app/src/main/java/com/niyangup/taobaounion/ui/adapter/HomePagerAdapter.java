@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.niyangup.taobaounion.model.domain.Category;
 import com.niyangup.taobaounion.ui.fragment.home.HomePagerFragment;
+import com.niyangup.taobaounion.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,8 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return new HomePagerFragment();
+        LogUtil.d(this, "getItem:" + position);
+        return HomePagerFragment.newInstance(categoryList.get(position));
     }
 
     @Override

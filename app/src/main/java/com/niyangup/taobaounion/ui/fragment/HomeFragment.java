@@ -43,7 +43,7 @@ public class HomeFragment extends BaseFragment implements HomeCallback {
     @Override
     protected void initPresent() {
         mHomePresenter = new HomePresenterImpl();
-        mHomePresenter.registerCallback(this);
+        mHomePresenter.registerViewCallback(this);
     }
 
     @Override
@@ -53,19 +53,41 @@ public class HomeFragment extends BaseFragment implements HomeCallback {
 
     @Override
     public void onCategoryLoaded(Category category) {
+        setUpState(State.SUCCESS);
         if (homePagerAdapter != null) {
             homePagerAdapter.setCategory(category);
         }
     }
 
     @Override
+    public void onLoading() {
+        setUpState(State.LOADING);
+    }
+
+    @Override
+    public void onNetworkError() {
+        setUpState(State.ERROR);
+    }
+
+    @Override
+    public void onEmpty() {
+        setUpState(State.EMPTY);
+    }
+
+    @Override
     protected void release() {
         if (mHomePresenter != null) {
-            mHomePresenter.unregisterCallback(this);
+            mHomePresenter.unregisterViewCallback(this);
         }
     }
 
-
+    @Override
+    protected void onRetryClick() {
+        //网络错误，重新加载
+        if (mHomePresenter != null) {
+            mHomePresenter.getCategory();
+        }
+    }
 }
 
 

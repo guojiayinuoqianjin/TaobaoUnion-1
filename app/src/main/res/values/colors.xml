@@ -6,4 +6,6 @@
     <color name="colorGrey">#7B7B7B</color>
     <color name="tabNormal">#aaffffff</color>
     <color name="tabSelected">#fff</color>
+    <color name="color_tmall">#D00218</color>
+    <color name="colorPageBg">#EFEEEE</color>
 </resources>
